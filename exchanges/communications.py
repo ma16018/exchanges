@@ -14,7 +14,7 @@ class SendEmails:
         self.sender = sender
         self.role = "MCR Social Secretary" if sender=="Megan" else "MCR Wine and Dine Rep" 
         self.date = date
-        self.dress, self.price, self.start. self.dinner_time = away_details
+        self.dress, self.price, self.start, self.dinner_time = away_details if away_details else (0, 0, 0, 0)
 
     def get_message_html(self, main):
         """Get string of the HTML code to use in the email."""
@@ -37,7 +37,8 @@ class SendEmails:
     @property
     def find_photos(self):
         """Collect the paths of photos in a list."""
-        path = os.getcwd() + "\\Pictures"
+        path = os.getcwd() + "\\exchanges\\Pictures"
+        print(path)
         pictures = []
         for root, dirs, files in os.walk(path):
             for file in files:
@@ -48,7 +49,9 @@ class SendEmails:
     def send_email(self, emails, main):
         """Interacts with Outlook app to send emails. Input is the required email addresses and main
         body of the message. If the leg is away it will also attach photos."""
+        print("Getting message")
         message = self.get_message_html(main)
+        print("Open outlook")
         outlook = win32com.client.Dispatch('outlook.application')
         mail = outlook.CreateItem(0)
         mail.To = emails 
@@ -62,6 +65,7 @@ class SendEmails:
         mail.Send()
         print(f"Sent.")
 
+    @property
     def email_sign_up(self):
         """Get messages and email for sign up and send off."""
         if self.leg == "Mansfield":
@@ -83,7 +87,7 @@ class SendEmails:
         """Get path name of an excel file in the specified folder. E.g. 'SignUps' folder for
         emails of everyone who signed up or 'Chosen' folder for emails of people who are confirmed 
         to attend."""
-        path = os.getcwd() + folder
+        path = os.getcwd() + "\\exchanges" + folder
         for root, dirs, files in os.walk(path):
             for file in files:
                 if self.college in file:
@@ -98,7 +102,7 @@ class SendEmails:
         n = len(data)
         rows = sample(range(n), attendents)
         winners = data.iloc[rows]
-        path = os.getcwd() + "\\Chosen" + f"\\{self.college}_selection.xlsx"
+        path = os.getcwd()  + "\\exchanges\\Chosen" + f"\\{self.college}_selection.xlsx"
         winners.to_excel(path)
         print(f"Found {len(winners)} people")
         emails = "; ".join(winners.Email)
