@@ -1,1 +1,1 @@
-from .communications import Exchange  # noqa F401
+from .communications import SendEmails  # noqa F401
