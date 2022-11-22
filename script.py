@@ -5,7 +5,8 @@ leg = "Mansfield"
 sender = "Megan"
 date = "Wednesday 23rd November"
 signup = ""  # add link
-test = SendEmails(college, leg, sender, date, link=signup)
+away_dets = ("formal", "10", "6:30pm", "7:30pm")  # dress, price, start, dinner_time
+test = SendEmails(college, leg, sender, date, away_details=away_dets, link=signup)
 
 # Email whole MCR about the event
 test.email_sign_up

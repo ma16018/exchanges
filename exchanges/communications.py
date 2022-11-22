@@ -77,7 +77,7 @@ class SendEmails:
                        fill out <a href="{self.link}">this form</a> within 24 hours of this email. Those that have been 
                        selected to attend will be informed by 10pm tomorrow."""
             
-        emails = "megana403@gmail.com" #"mansfield-mcr-announce@maillist.ox.ac.uk"
+        emails = "mansfield-mcr-announce@maillist.ox.ac.uk"
         self.send_email(emails, message)
 
     def find_excel(self, folder = "\\SignUps"):
